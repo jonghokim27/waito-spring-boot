@@ -1,0 +1,61 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${WAITO_MYSQL_HOST}:${WAITO_MYSQL_PORT}/${WAITO_MYSQL_DATABASE}?serverTimezone=${WAITO_TIME_ZONE}&characterEncoding=UTF-8
+    username: ${WAITO_MYSQL_USERNAME}
+    password: ${WAITO_MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 20
+  data:
+    redis:
+      host: ${WAITO_REDIS_HOST}
+      port: ${WAITO_REDIS_PORT}
+      timeout: 3s
+  kafka:
+    bootstrap-servers: ${WAITO_KAFKA_BOOTSTRAP_SERVERS}
+    consumer:
+      group-id: waito
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+waito:
+  jwt:
+    private-key: ${WAITO_JWT_PRIVATE_KEY}
+  kafka:
+    topics:
+      reservation-request: waito.reservation.request
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,threaddump,heapdump,loggers
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true

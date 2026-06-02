@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: waito-batch
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+      - classpath:/common.yml

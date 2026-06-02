@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: waito-api
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+      - classpath:/common.yml
+server:
+  port: 8080
