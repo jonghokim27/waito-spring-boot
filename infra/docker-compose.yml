@@ -226,8 +226,7 @@ services:
       - "9324:9324"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - waito
+    network_mode: "host"
 
   waito-api:
     build:
@@ -240,8 +239,7 @@ services:
       - ../.env
     ports:
       - "${WAITO_API_PORT}:${WAITO_API_PORT}"
-    networks:
-      - waito
+    network_mode: "host"
 
   waito-consumer:
     build:
@@ -287,10 +285,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml.template:ro
       - prometheus-data:/prometheus
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:
-      - waito
+    network_mode: "host"
 
   grafana:
     image: grafana/grafana:11.3.1
