@@ -1,20 +1,24 @@
 import crypto from "k6/crypto";
 import encoding from "k6/encoding";
 import http, { RefinedResponse, ResponseType } from "k6/http";
-import { check, sleep } from "k6";
+import { check } from "k6";
 import { Options } from "k6/options";
 
 const BASE_URL = __ENV.BASE_URL ?? "http://10.0.10.217:8080";
 const PRODUCT_ID = __ENV.PRODUCT_ID ?? "1";
 const USER_ID = Number(__ENV.USER_ID ?? "1");
 const JWT_PRIVATE_KEY = __ENV.JWT_PRIVATE_KEY ?? "waito-local-development-jwt-private-key-change-me";
+const RPS = Number(__ENV.RPS ?? "10");
 
 export const options: Options = {
   scenarios: {
     productDetail: {
-      executor: "constant-vus",
-      vus: Number(__ENV.VUS ?? "10"),
+      executor: "constant-arrival-rate",
+      rate: RPS,
+      timeUnit: "1s",
       duration: __ENV.DURATION ?? "30s",
+      preAllocatedVUs: Number(__ENV.PRE_ALLOCATED_VUS ?? Math.max(RPS, 10).toString()),
+      maxVUs: Number(__ENV.MAX_VUS ?? Math.max(RPS * 2, 20).toString()),
     },
   },
   thresholds: {
@@ -30,8 +34,6 @@ export default function (): void {
     "product detail status is 200": (res) => res.status === 200,
     "product detail response has body": (res) => Boolean(res.body),
   });
-
-  sleep(1);
 }
 
 function getProductDetail(productId: string): RefinedResponse<ResponseType> {
