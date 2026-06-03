@@ -211,7 +211,7 @@ services:
     image: oliver006/redis_exporter:v1.67.0
     container_name: waito-redis-exporter
     environment:
-      REDIS_ADDR: redis://redis:6379
+      REDIS_ADDR: redis://${WAITO_REDIS_HOST}:${WAITO_REDIS_PORT}
     ports:
       - "9121:9121"
     depends_on:
