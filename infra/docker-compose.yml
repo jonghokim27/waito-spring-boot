@@ -261,15 +261,6 @@ services:
       - prometheus-data:/prometheus
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    depends_on:
-      kafka-exporter:
-        condition: service_started
-      mysql-exporter:
-        condition: service_started
-      redis-exporter:
-        condition: service_started
-      docker-stats-exporter:
-        condition: service_started
     networks:
       - waito
 
