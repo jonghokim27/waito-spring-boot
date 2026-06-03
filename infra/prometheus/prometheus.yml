@@ -36,5 +36,5 @@ scrape_configs:
     static_configs:
       - targets:
           - __WAITO_API_HOST__:9324
-          - __WAITO_REDIS_HOST_:9324
+          - __WAITO_REDIS_HOST__:9324
           - __WAITO_MYSQL_HOST__:9104
