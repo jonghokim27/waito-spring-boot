@@ -232,15 +232,32 @@ services:
   prometheus:
     image: prom/prometheus:v2.55.1
     container_name: waito-prometheus
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --storage.tsdb.retention.time=15d
-      - --web.enable-lifecycle
+    environment:
+      WAITO_API_HOST: ${WAITO_API_HOST}
+      WAITO_API_PORT: ${WAITO_API_PORT}
+      WAITO_MYSQL_HOST: ${WAITO_MYSQL_HOST}
+      WAITO_REDIS_HOST: ${WAITO_REDIS_HOST}
+      WAITO_KAFKA_EXTERNAL_HOST: ${WAITO_KAFKA_EXTERNAL_HOST}
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        sed \
+          -e "s|__WAITO_API_HOST__|$${WAITO_API_HOST}|g" \
+          -e "s|__WAITO_API_PORT__|$${WAITO_API_PORT}|g" \
+          -e "s|__WAITO_MYSQL_HOST__|$${WAITO_MYSQL_HOST}|g" \
+          -e "s|__WAITO_REDIS_HOST__|$${WAITO_REDIS_HOST}|g" \
+          -e "s|__WAITO_KAFKA_EXTERNAL_HOST__|$${WAITO_KAFKA_EXTERNAL_HOST}|g" \
+          /etc/prometheus/prometheus.yml.template > /tmp/prometheus.yml
+        exec /bin/prometheus \
+          --config.file=/tmp/prometheus.yml \
+          --storage.tsdb.path=/prometheus \
+          --storage.tsdb.retention.time=15d \
+          --web.enable-lifecycle
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml.template:ro
       - prometheus-data:/prometheus
     extra_hosts:
       - "host.docker.internal:host-gateway"

@@ -13,26 +13,28 @@ scrape_configs:
     metrics_path: /actuator/prometheus
     static_configs:
       - targets:
-          - host.docker.internal:8080
+          - __WAITO_API_HOST__:__WAITO_API_PORT__
         labels:
           application: waito-api
 
   - job_name: mysql
     static_configs:
       - targets:
-          - mysql-exporter:9104
+          - __WAITO_MYSQL_HOST__:9104
 
   - job_name: redis
     static_configs:
       - targets:
-          - redis-exporter:9121
+          - __WAITO_REDIS_HOST__:9121
 
   - job_name: kafka
     static_configs:
       - targets:
-          - kafka-exporter:9308
+          - __WAITO_KAFKA_EXTERNAL_HOST__:9308
 
   - job_name: docker-stats
     static_configs:
       - targets:
-          - docker-stats-exporter:9324
+          - __WAITO_API_HOST__:9324
+          - __WAITO_REDIS_HOST_:9324
+          - __WAITO_MYSQL_HOST__:9104
