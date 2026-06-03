@@ -237,8 +237,6 @@ services:
     container_name: waito-api
     env_file:
       - ../.env
-    ports:
-      - "${WAITO_API_PORT}:${WAITO_API_PORT}"
     network_mode: "host"
 
   waito-consumer:
@@ -250,10 +248,7 @@ services:
     container_name: waito-consumer
     env_file:
       - ../.env
-    ports:
-      - "8090:8090"
-    networks:
-      - waito
+    network_mode: "host"
 
   prometheus:
     image: prom/prometheus:v2.55.1
@@ -280,8 +275,6 @@ services:
           --storage.tsdb.path=/prometheus \
           --storage.tsdb.retention.time=15d \
           --web.enable-lifecycle
-    ports:
-      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml.template:ro
       - prometheus-data:/prometheus
