@@ -29,11 +29,9 @@ services:
   redis:
     image: redis:7.4-alpine
     container_name: waito-redis
-    command: ["redis-server", "--appendonly", "yes", "--latency-monitor-threshold", "100"]
+    command: ["redis-server", "--appendonly", "no", "--latency-monitor-threshold", "100", "--save", '""']
     ports:
       - "${WAITO_REDIS_PORT}:6379"
-    volumes:
-      - redis-data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -211,7 +209,7 @@ services:
     image: oliver006/redis_exporter:v1.67.0
     container_name: waito-redis-exporter
     environment:
-      REDIS_ADDR: redis://${WAITO_REDIS_HOST}:${WAITO_REDIS_PORT}
+      REDIS_ADDR: redis://redis:${WAITO_REDIS_PORT}
     ports:
       - "9121:9121"
     depends_on:
