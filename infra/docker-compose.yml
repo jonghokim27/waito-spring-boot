@@ -222,10 +222,9 @@ services:
     build:
       context: ./docker-stats-exporter
     container_name: waito-docker-stats-exporter
+    privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    group_add:
-      - "${WAITO_DOCKER_GID:-0}"
     network_mode: "host"
 
   waito-api:
