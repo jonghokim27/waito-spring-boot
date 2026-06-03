@@ -229,6 +229,34 @@ services:
     networks:
       - waito
 
+  waito-api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        MODULE: waito-api
+    container_name: waito-api
+    env_file:
+      - ../.env
+    ports:
+      - "${WAITO_API_PORT}:${WAITO_API_PORT}"
+    networks:
+      - waito
+
+  waito-consumer:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        MODULE: waito-consumer
+    container_name: waito-consumer
+    env_file:
+      - ../.env
+    ports:
+      - "8090:8090"
+    networks:
+      - waito
+
   prometheus:
     image: prom/prometheus:v2.55.1
     container_name: waito-prometheus
