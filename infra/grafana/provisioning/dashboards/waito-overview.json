@@ -66,7 +66,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(tomcat_threads_busy_threads{application=\"waito-api\"}) / sum(tomcat_threads_config_max_threads{application=\"waito-api\"}) * 100",
+          "expr": "sum(tomcat_threads_busy_threads{application=\"waito-api\",name=\"http-nio-8080\"}) / sum(tomcat_threads_config_max_threads{application=\"waito-api\",name=\"http-nio-8080\"}) * 100",
           "legendFormat": "busy/max"
         }
       ]
@@ -171,17 +171,17 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(tomcat_threads_busy_threads{application=\"waito-api\"}) by (name)",
+          "expr": "sum(tomcat_threads_busy_threads{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "busy {{name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(tomcat_threads_current_threads{application=\"waito-api\"}) by (name)",
+          "expr": "sum(tomcat_threads_current_threads{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "current {{name}}"
         },
         {
           "refId": "C",
-          "expr": "sum(tomcat_threads_config_max_threads{application=\"waito-api\"}) by (name)",
+          "expr": "sum(tomcat_threads_config_max_threads{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "max {{name}}"
         }
       ]
@@ -195,12 +195,12 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(tomcat_connections_current_connections{application=\"waito-api\"}) by (name)",
+          "expr": "sum(tomcat_connections_current_connections{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "current {{name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(tomcat_connections_config_max_connections{application=\"waito-api\"}) by (name)",
+          "expr": "sum(tomcat_connections_config_max_connections{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "max {{name}}"
         }
       ]
