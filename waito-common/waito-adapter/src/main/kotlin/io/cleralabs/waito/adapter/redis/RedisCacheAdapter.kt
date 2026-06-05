@@ -2,7 +2,9 @@ package io.cleralabs.waito.adapter.redis
 
 import io.cleralabs.waito.core.port.CachePort
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Component
 
+@Component
 class RedisCacheAdapter(
     private val redisTemplate: RedisTemplate<String, String>
 ) : CachePort {
