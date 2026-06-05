@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy
 import javax.sql.DataSource
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
 class DataSourceConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.hikari")
