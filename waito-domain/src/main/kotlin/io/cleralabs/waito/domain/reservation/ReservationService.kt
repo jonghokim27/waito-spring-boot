@@ -49,7 +49,7 @@ class ReservationService(
 
     @RedisCacheable(
         cacheName = "reservation:active",
-        key = "#productId:#userId",
+        key = "#productId + ':' + #userId",
     )
     fun hasActiveReservation(productId: Long, userId: Long): Boolean {
         val userIds = reservationRepository.findUserIdsByProductIdAndStatusIn(

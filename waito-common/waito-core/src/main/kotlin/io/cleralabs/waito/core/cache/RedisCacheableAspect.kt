@@ -23,7 +23,7 @@ class RedisCacheableAspect(
     private val parser = SpelExpressionParser()
     private val parameterNameDiscoverer = DefaultParameterNameDiscoverer()
 
-    @Around("@annotation(io.cleralabs.waito.core.cache.RedisCacheable)")
+    @Around("@annotation(redisCacheable)")
     fun around(joinPoint: ProceedingJoinPoint, redisCacheable: RedisCacheable): Any? {
         val method = (joinPoint.signature as MethodSignature).method
         val cacheKey = evaluateKey(redisCacheable.cacheName, redisCacheable.key, method, joinPoint.args)
