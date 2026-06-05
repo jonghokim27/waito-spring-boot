@@ -1,5 +1,6 @@
 package io.cleralabs.waito.domain.product
 
+import io.cleralabs.waito.core.cache.RedisCacheable
 import io.cleralabs.waito.core.enums.ProductCategory
 import io.cleralabs.waito.core.enums.ProductStatus
 import io.cleralabs.waito.core.exception.BusinessException
@@ -24,6 +25,10 @@ class ProductService(
         ).map { it.toView() }
     }
 
+    @RedisCacheable(
+        cacheName = "product:detail",
+        key = "#productId"
+    )
     fun getProduct(productId: Long): ProductView {
         return productRepository.findById(productId)
             .orElseThrow { BusinessException(PRODUCT_NOT_FOUND_CODE) }

@@ -1,5 +1,6 @@
 package io.cleralabs.waito.domain.reservation
 
+import io.cleralabs.waito.core.cache.RedisCacheable
 import io.cleralabs.waito.core.enums.ReservationStatus
 import io.cleralabs.waito.core.exception.BusinessException
 import io.cleralabs.waito.domain.reservation.factory.toView
@@ -46,6 +47,10 @@ class ReservationService(
         ).map { it.toView() }
     }
 
+    @RedisCacheable(
+        cacheName = "reservation:active",
+        key = "#productId:#userId",
+    )
     fun hasActiveReservation(productId: Long, userId: Long): Boolean {
         val userIds = reservationRepository.findUserIdsByProductIdAndStatusIn(
             productId = productId,
