@@ -13,7 +13,7 @@ scrape_configs:
     metrics_path: /actuator/prometheus
     static_configs:
       - targets:
-          - __WAITO_API_HOST__:__WAITO_API_PORT__
+          - __WAITO_API_HOST__:__WAITO_API_MANAGEMENT_PORT__
         labels:
           application: waito-api
 

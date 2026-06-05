@@ -254,6 +254,7 @@ services:
     environment:
       WAITO_API_HOST: ${WAITO_API_HOST}
       WAITO_API_PORT: ${WAITO_API_PORT}
+      WAITO_API_MANAGEMENT_PORT: ${WAITO_API_MANAGEMENT_PORT}
       WAITO_MYSQL_HOST: ${WAITO_MYSQL_HOST}
       WAITO_REDIS_HOST: ${WAITO_REDIS_HOST}
       WAITO_KAFKA_EXTERNAL_HOST: ${WAITO_KAFKA_EXTERNAL_HOST}
@@ -264,6 +265,7 @@ services:
         sed \
           -e "s|__WAITO_API_HOST__|$${WAITO_API_HOST}|g" \
           -e "s|__WAITO_API_PORT__|$${WAITO_API_PORT}|g" \
+          -e "s|__WAITO_API_MANAGEMENT_PORT__|$${WAITO_API_MANAGEMENT_PORT}|g" \
           -e "s|__WAITO_MYSQL_HOST__|$${WAITO_MYSQL_HOST}|g" \
           -e "s|__WAITO_REDIS_HOST__|$${WAITO_REDIS_HOST}|g" \
           -e "s|__WAITO_KAFKA_EXTERNAL_HOST__|$${WAITO_KAFKA_EXTERNAL_HOST}|g" \

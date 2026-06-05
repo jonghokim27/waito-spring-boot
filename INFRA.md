@@ -56,7 +56,7 @@ Scrape config:
 
 - Source file: `infra/prometheus/prometheus.yml`
 - Docker Compose expands API and infra host variables before Prometheus starts.
-- waito-api metrics: `http://${WAITO_API_HOST}:${WAITO_API_PORT}/actuator/prometheus`
+- waito-api metrics: `http://${WAITO_API_HOST}:${WAITO_API_MANAGEMENT_PORT}/actuator/prometheus`
 
 Useful pages:
 
@@ -93,8 +93,8 @@ These are not full Web UIs, but they are useful for direct checks.
 
 | Service | URL |
 | --- | --- |
-| waito-api Prometheus metrics | http://localhost:8080/actuator/prometheus |
-| waito-api health | http://localhost:8080/actuator/health |
+| waito-api Prometheus metrics | http://localhost:8081/actuator/prometheus |
+| waito-api health | http://localhost:8081/actuator/health |
 | MySQL exporter metrics | http://localhost:9104/metrics |
 | Redis exporter metrics | http://localhost:9121/metrics |
 | Kafka exporter metrics | http://localhost:9308/metrics |
@@ -107,6 +107,7 @@ These are not full Web UIs, but they are useful for direct checks.
 | Service | Host Port | Internal Port |
 | --- |-----------| --- |
 | waito-api | `8080`    | local process |
+| waito-api management | `8081`    | local process |
 | MySQL | `3306`   | `3306` |
 | Redis | `6379`    | `6379` |
 | Kafka broker 1 | `19092`   | `9092` |

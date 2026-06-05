@@ -43,6 +43,8 @@ waito:
       reservation-request: waito.reservation.request
 
 management:
+  server:
+    port: ${WAITO_API_MANAGEMENT_PORT:8081}
   endpoints:
     web:
       exposure:
