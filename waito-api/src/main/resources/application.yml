@@ -8,3 +8,7 @@ spring:
       - classpath:/common.yml
 server:
   port: ${WAITO_API_PORT:8080}
+
+management:
+  server:
+    port: ${WAITO_API_MANAGEMENT_PORT:8081}
