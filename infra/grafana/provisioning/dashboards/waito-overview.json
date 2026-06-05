@@ -533,16 +533,16 @@
       "title": "Cache Hit / Miss by Cache",
       "type": "timeseries",
       "gridPos": {"x": 0, "y": 65, "w": 8, "h": 8},
-      "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
+      "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(waito_cache_hit_total[1m])) by (cache_name)",
+          "expr": "sum(increase(waito_cache_hit_total[$__range])) by (cache_name)",
           "legendFormat": "hit {{cache_name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(rate(waito_cache_miss_total[1m])) by (cache_name)",
+          "expr": "sum(increase(waito_cache_miss_total[$__range])) by (cache_name)",
           "legendFormat": "miss {{cache_name}}"
         }
       ]
@@ -556,7 +556,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(waito_cache_hit_total[1m])) by (cache_name) / (sum(rate(waito_cache_hit_total[1m])) by (cache_name) + sum(rate(waito_cache_miss_total[1m])) by (cache_name))",
+          "expr": "sum(increase(waito_cache_hit_total[$__range])) by (cache_name) / (sum(increase(waito_cache_hit_total[$__range])) by (cache_name) + sum(increase(waito_cache_miss_total[$__range])) by (cache_name))",
           "legendFormat": "{{cache_name}}"
         }
       ]
@@ -566,16 +566,16 @@
       "title": "Cache Stampede Risk",
       "type": "timeseries",
       "gridPos": {"x": 16, "y": 65, "w": 8, "h": 8},
-      "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
+      "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(waito_cache_miss_total[1m])) by (cache_name)",
+          "expr": "sum(increase(waito_cache_miss_total[$__range])) by (cache_name)",
           "legendFormat": "miss {{cache_name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(rate(waito_cache_put_total[1m])) by (cache_name)",
+          "expr": "sum(increase(waito_cache_put_total[$__range])) by (cache_name)",
           "legendFormat": "put {{cache_name}}"
         }
       ]
