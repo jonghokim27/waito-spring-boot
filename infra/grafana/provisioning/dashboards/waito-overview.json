@@ -537,12 +537,12 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(waito_cache_hit_total[$__range])) by (cache_name)",
+          "expr": "sum(waito_cache_hit_total) by (cache_name)",
           "legendFormat": "hit {{cache_name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(increase(waito_cache_miss_total[$__range])) by (cache_name)",
+          "expr": "sum(waito_cache_miss_total) by (cache_name)",
           "legendFormat": "miss {{cache_name}}"
         }
       ]
@@ -556,7 +556,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(waito_cache_hit_total[$__range])) by (cache_name) / (sum(increase(waito_cache_hit_total[$__range])) by (cache_name) + sum(increase(waito_cache_miss_total[$__range])) by (cache_name))",
+          "expr": "sum(waito_cache_hit_total) by (cache_name) / (sum(waito_cache_hit_total) by (cache_name) + sum(waito_cache_miss_total) by (cache_name))",
           "legendFormat": "{{cache_name}}"
         }
       ]
@@ -570,12 +570,12 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(waito_cache_miss_total[$__range])) by (cache_name)",
+          "expr": "sum(waito_cache_miss_total) by (cache_name)",
           "legendFormat": "miss {{cache_name}}"
         },
         {
           "refId": "B",
-          "expr": "sum(increase(waito_cache_put_total[$__range])) by (cache_name)",
+          "expr": "sum(waito_cache_put_total) by (cache_name)",
           "legendFormat": "put {{cache_name}}"
         }
       ]
