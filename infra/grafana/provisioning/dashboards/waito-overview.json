@@ -456,7 +456,7 @@
         {
           "refId": "A",
           "expr": "topk(10, rate(mysql_perf_schema_events_statements_seconds_total{schema!=\"\"}[5m]))",
-          "legendFormat": "{{schema}} | {{digest}}"
+          "legendFormat": "{{schema}} | {{digest_text}}"
         }
       ]
     },
@@ -471,7 +471,7 @@
         {
           "refId": "A",
           "expr": "topk(10, rate(mysql_perf_schema_events_statements_seconds_total{schema!=\"\"}[5m]) / rate(mysql_perf_schema_events_statements_total{schema!=\"\"}[5m]))",
-          "legendFormat": "{{schema}} | {{digest}}"
+          "legendFormat": "{{schema}} | {{digest_text}}"
         }
       ]
     },
