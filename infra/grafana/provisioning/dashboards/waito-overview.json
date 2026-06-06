@@ -476,18 +476,33 @@
       ]
     },
     {
+      "id": 47,
+      "title": "MySQL Query Top 10 - Queries per Second",
+      "description": "Top query digests by executions per second over the last 5 minutes.",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 64, "w": 24, "h": 8},
+      "fieldConfig": {"defaults": {"unit": "qps", "decimals": 3, "min": 0}},
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(10, rate(mysql_perf_schema_events_statements_total{schema!=\"\"}[5m]))",
+          "legendFormat": "{{schema}} | {{digest_text}}"
+        }
+      ]
+    },
+    {
       "id": 104,
       "title": "Redis",
       "type": "row",
       "collapsed": false,
-      "gridPos": {"x": 0, "y": 64, "w": 24, "h": 1},
+      "gridPos": {"x": 0, "y": 72, "w": 24, "h": 1},
       "panels": []
     },
     {
       "id": 40,
       "title": "Redis Commands / Errors",
       "type": "timeseries",
-      "gridPos": {"x": 0, "y": 65, "w": 8, "h": 8},
+      "gridPos": {"x": 0, "y": 73, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
@@ -511,7 +526,7 @@
       "id": 41,
       "title": "Redis Latency",
       "type": "timeseries",
-      "gridPos": {"x": 8, "y": 65, "w": 8, "h": 8},
+      "gridPos": {"x": 8, "y": 73, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "us", "decimals": 2}},
       "targets": [
         {
@@ -530,7 +545,7 @@
       "id": 42,
       "title": "Redis Clients / Memory",
       "type": "timeseries",
-      "gridPos": {"x": 16, "y": 65, "w": 8, "h": 8},
+      "gridPos": {"x": 16, "y": 73, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"decimals": 2}},
       "targets": [
         {
@@ -555,14 +570,14 @@
       "title": "Kafka",
       "type": "row",
       "collapsed": false,
-      "gridPos": {"x": 0, "y": 81, "w": 24, "h": 1},
+      "gridPos": {"x": 0, "y": 89, "w": 24, "h": 1},
       "panels": []
     },
     {
       "id": 43,
       "title": "Cache Hit / Miss by Cache",
       "type": "timeseries",
-      "gridPos": {"x": 0, "y": 73, "w": 8, "h": 8},
+      "gridPos": {"x": 0, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
@@ -581,7 +596,7 @@
       "id": 44,
       "title": "Cache Hit Ratio by Cache",
       "type": "timeseries",
-      "gridPos": {"x": 8, "y": 73, "w": 8, "h": 8},
+      "gridPos": {"x": 8, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "percentunit", "decimals": 3, "min": 0, "max": 1}},
       "targets": [
         {
@@ -595,7 +610,7 @@
       "id": 45,
       "title": "Cache Stampede Risk",
       "type": "timeseries",
-      "gridPos": {"x": 16, "y": 73, "w": 8, "h": 8},
+      "gridPos": {"x": 16, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
@@ -614,7 +629,7 @@
       "id": 50,
       "title": "Kafka Consumer Lag",
       "type": "timeseries",
-      "gridPos": {"x": 0, "y": 82, "w": 6, "h": 8},
+      "gridPos": {"x": 0, "y": 90, "w": 6, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
@@ -628,7 +643,7 @@
       "id": 51,
       "title": "Kafka Messages Produced",
       "type": "timeseries",
-      "gridPos": {"x": 6, "y": 82, "w": 6, "h": 8},
+      "gridPos": {"x": 6, "y": 90, "w": 6, "h": 8},
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
@@ -642,7 +657,7 @@
       "id": 53,
       "title": "Kafka Messages Consumed",
       "type": "timeseries",
-      "gridPos": {"x": 12, "y": 82, "w": 6, "h": 8},
+      "gridPos": {"x": 12, "y": 90, "w": 6, "h": 8},
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
@@ -656,7 +671,7 @@
       "id": 52,
       "title": "Kafka Brokers / CPU",
       "type": "timeseries",
-      "gridPos": {"x": 18, "y": 82, "w": 6, "h": 8},
+      "gridPos": {"x": 18, "y": 90, "w": 6, "h": 8},
       "fieldConfig": {"defaults": {"decimals": 2}},
       "targets": [
         {
@@ -676,14 +691,14 @@
       "title": "Infra",
       "type": "row",
       "collapsed": false,
-      "gridPos": {"x": 0, "y": 90, "w": 24, "h": 1},
+      "gridPos": {"x": 0, "y": 98, "w": 24, "h": 1},
       "panels": []
     },
     {
       "id": 60,
       "title": "Infra CPU Usage",
       "type": "timeseries",
-      "gridPos": {"x": 0, "y": 91, "w": 12, "h": 8},
+      "gridPos": {"x": 0, "y": 99, "w": 12, "h": 8},
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 2}},
       "targets": [
         {
@@ -697,7 +712,7 @@
       "id": 61,
       "title": "Infra Memory Usage",
       "type": "timeseries",
-      "gridPos": {"x": 12, "y": 91, "w": 12, "h": 8},
+      "gridPos": {"x": 12, "y": 99, "w": 12, "h": 8},
       "fieldConfig": {"defaults": {"unit": "mbytes", "decimals": 2}},
       "targets": [
         {
