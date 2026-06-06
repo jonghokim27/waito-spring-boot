@@ -16,6 +16,14 @@ class MicrometerCacheMetricAdapter(
         increment("waito.cache.miss", cacheName)
     }
 
+    override fun recordPut(cacheName: String) {
+        increment("waito.cache.put", cacheName)
+    }
+
+    override fun recordStampede(cacheName: String) {
+        increment("waito.cache.stampede", cacheName)
+    }
+
     private fun increment(metricName: String, cacheName: String) {
         meterRegistry.counter(
             metricName,

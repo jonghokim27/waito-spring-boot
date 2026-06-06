@@ -4,7 +4,7 @@
   "tags": ["waito", "ticketing"],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 2,
+  "version": 3,
   "refresh": "5s",
   "panels": [
     {
@@ -23,6 +23,7 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 3}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=\"waito-api\",uri!=\"/actuator/prometheus\"}[1m])) by (le))",
           "legendFormat": "p95"
@@ -37,6 +38,7 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(rate(http_server_requests_seconds_count{application=\"waito-api\",status=~\"5..\"}[1m]))",
           "legendFormat": "5xx/sec"
@@ -51,6 +53,7 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(http_server_requests_active_seconds_gcount{application=\"waito-api\"})",
           "legendFormat": "active"
@@ -65,6 +68,7 @@
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 1, "min": 0, "max": 100}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(waito_api_tomcat_threads_busy{application=\"waito-api\",name=\"http-nio-8080\"}) / sum(waito_api_tomcat_threads_max{application=\"waito-api\",name=\"http-nio-8080\"}) * 100",
           "legendFormat": "busy/max"
@@ -79,6 +83,7 @@
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 1, "min": 0, "max": 100}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(hikaricp_connections_active{application=\"waito-api\"}) / sum(hikaricp_connections_max{application=\"waito-api\"}) * 100",
           "legendFormat": "active/max"
@@ -93,6 +98,7 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(clamp_min(kafka_consumergroup_lag, 0))",
           "legendFormat": "lag"
@@ -115,6 +121,7 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(rate(http_server_requests_seconds_count{application=\"waito-api\",uri!=\"/actuator/prometheus\"}[1m])) by (method, uri, status)",
           "legendFormat": "{{method}} {{uri}} {{status}}"
@@ -129,11 +136,13 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 3}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=\"waito-api\",uri!=\"/actuator/prometheus\"}[1m])) by (le, method, uri))",
           "legendFormat": "p95 {{method}} {{uri}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket{application=\"waito-api\",uri!=\"/actuator/prometheus\"}[1m])) by (le, method, uri))",
           "legendFormat": "p99 {{method}} {{uri}}"
@@ -148,6 +157,7 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(http_server_requests_active_seconds_gcount{application=\"waito-api\"}) by (method, uri, status)",
           "legendFormat": "{{method}} {{uri}} {{status}}"
@@ -170,16 +180,19 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(waito_api_tomcat_threads_busy{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "busy {{name}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "sum(waito_api_tomcat_threads_current{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "current {{name}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "C",
           "expr": "sum(waito_api_tomcat_threads_max{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "max {{name}}"
@@ -194,11 +207,13 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(waito_api_tomcat_connections_current{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "current {{name}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "sum(waito_api_tomcat_connections_max{application=\"waito-api\",name=\"http-nio-8080\"}) by (name)",
           "legendFormat": "max {{name}}"
@@ -213,6 +228,7 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "jvm_threads_states_threads{application=\"waito-api\"}",
           "legendFormat": "{{state}}"
@@ -227,11 +243,13 @@
       "fieldConfig": {"defaults": {"unit": "percentunit", "decimals": 3, "min": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "process_cpu_usage{application=\"waito-api\"}",
           "legendFormat": "process"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "system_cpu_usage{application=\"waito-api\"}",
           "legendFormat": "system"
@@ -246,6 +264,7 @@
       "fieldConfig": {"defaults": {"unit": "mbytes", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(jvm_memory_used_bytes{application=\"waito-api\"}) by (area) / 1024 / 1024",
           "legendFormat": "{{area}}"
@@ -260,11 +279,13 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 4}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "rate(jvm_gc_pause_seconds_sum{application=\"waito-api\"}[1m])",
           "legendFormat": "pause seconds/sec"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "jvm_gc_overhead{application=\"waito-api\"}",
           "legendFormat": "overhead ratio"
@@ -287,21 +308,25 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "hikaricp_connections_active{application=\"waito-api\"}",
           "legendFormat": "active"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "hikaricp_connections_idle{application=\"waito-api\"}",
           "legendFormat": "idle"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "C",
           "expr": "hikaricp_connections_pending{application=\"waito-api\"}",
           "legendFormat": "pending"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "D",
           "expr": "hikaricp_connections_max{application=\"waito-api\"}",
           "legendFormat": "max"
@@ -316,11 +341,13 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 4}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "hikaricp_connections_acquire_seconds_max{application=\"waito-api\"}",
           "legendFormat": "acquire max"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "hikaricp_connections_usage_seconds_max{application=\"waito-api\"}",
           "legendFormat": "usage max"
@@ -335,6 +362,7 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 3}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "rate(hikaricp_connections_timeout_total{application=\"waito-api\"}[1m])",
           "legendFormat": "timeouts/sec"
@@ -349,11 +377,13 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "rate(mysql_global_status_queries[1m])",
           "legendFormat": "qps"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "sum(rate(mysql_global_status_commands_total{command=~\"commit|rollback\"}[1m]))",
           "legendFormat": "tps"
@@ -368,16 +398,19 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "mysql_global_status_threads_connected",
           "legendFormat": "threads connected"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "mysql_global_status_threads_running",
           "legendFormat": "threads running"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "C",
           "expr": "rate(mysql_global_status_connections[1m])",
           "legendFormat": "new connections/sec"
@@ -392,11 +425,13 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 3}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "rate(mysql_global_status_slow_queries[1m])",
           "legendFormat": "slow queries/sec"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "rate(mysql_global_status_innodb_row_lock_waits[1m])",
           "legendFormat": "row lock waits/sec"
@@ -411,6 +446,7 @@
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 3, "min": 0, "max": 100}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "(1 - rate(mysql_global_status_innodb_buffer_pool_reads[5m]) / rate(mysql_global_status_innodb_buffer_pool_read_requests[5m])) * 100",
           "legendFormat": "hit ratio"
@@ -425,6 +461,7 @@
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "docker_container_cpu_usage_cores{name=\"waito-mysql\"} * 100",
           "legendFormat": "cpu"
@@ -439,6 +476,7 @@
       "fieldConfig": {"defaults": {"unit": "mbytes", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "docker_container_memory_usage_mb{name=\"waito-mysql\"}",
           "legendFormat": "memory"
@@ -454,6 +492,7 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 4}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "topk(10, rate(mysql_perf_schema_events_statements_seconds_total{schema!=\"\"}[5m]))",
           "legendFormat": "{{schema}} | {{digest_text}}"
@@ -469,6 +508,7 @@
       "fieldConfig": {"defaults": {"unit": "s", "decimals": 4}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "topk(10, rate(mysql_perf_schema_events_statements_seconds_total{schema!=\"\"}[5m]) / rate(mysql_perf_schema_events_statements_total{schema!=\"\"}[5m]))",
           "legendFormat": "{{schema}} | {{digest_text}}"
@@ -484,6 +524,7 @@
       "fieldConfig": {"defaults": {"unit": "qps", "decimals": 3, "min": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "topk(10, rate(mysql_perf_schema_events_statements_total{schema!=\"\"}[5m]))",
           "legendFormat": "{{schema}} | {{digest_text}}"
@@ -506,16 +547,19 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "rate(redis_commands_processed_total[1m])",
           "legendFormat": "commands/sec"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "sum(rate(redis_commands_failed_calls_total[1m])) by (cmd)",
           "legendFormat": "failed {{cmd}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "C",
           "expr": "rate(redis_total_error_replies[1m])",
           "legendFormat": "error replies/sec"
@@ -530,11 +574,13 @@
       "fieldConfig": {"defaults": {"unit": "us", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "redis_latency_percentiles_usec",
           "legendFormat": "{{cmd}} p{{quantile}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "redis_last_slow_execution_duration_seconds * 1000000",
           "legendFormat": "last slow execution"
@@ -549,16 +595,19 @@
       "fieldConfig": {"defaults": {"decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "redis_connected_clients",
           "legendFormat": "connected clients"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "redis_blocked_clients",
           "legendFormat": "blocked clients"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "C",
           "expr": "redis_memory_used_bytes / 1024 / 1024",
           "legendFormat": "memory MB"
@@ -581,14 +630,16 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
-          "expr": "sum(increase(waito_cache_hit_total[1m])) by (cache_name)",
-          "legendFormat": "hit {{cache_name}}"
+          "expr": "sum(waito_cache_hit_total) by (cache_name)",
+          "legendFormat": "total hits {{cache_name}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
-          "expr": "sum(increase(waito_cache_miss_total[1m])) by (cache_name)",
-          "legendFormat": "miss {{cache_name}}"
+          "expr": "sum(waito_cache_miss_total) by (cache_name)",
+          "legendFormat": "total misses {{cache_name}}"
         }
       ]
     },
@@ -600,6 +651,7 @@
       "fieldConfig": {"defaults": {"unit": "percentunit", "decimals": 3, "min": 0, "max": 1}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(increase(waito_cache_hit_total[1m])) by (cache_name) / (sum(increase(waito_cache_hit_total[1m])) by (cache_name) + sum(increase(waito_cache_miss_total[1m])) by (cache_name))",
           "legendFormat": "{{cache_name}}"
@@ -608,20 +660,28 @@
     },
     {
       "id": 45,
-      "title": "Cache Stampede Risk",
+      "title": "Cache Stampede Events / Miss / Put",
       "type": "timeseries",
       "gridPos": {"x": 16, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
-          "expr": "sum(increase(waito_cache_miss_total[1m])) by (cache_name)",
-          "legendFormat": "miss {{cache_name}}"
+          "expr": "sum(waito_cache_miss_total) by (cache_name)",
+          "legendFormat": "total misses {{cache_name}}"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
-          "expr": "sum(increase(waito_cache_put_total[1m])) by (cache_name)",
-          "legendFormat": "put {{cache_name}}"
+          "expr": "sum(waito_cache_put_total) by (cache_name)",
+          "legendFormat": "total puts {{cache_name}}"
+        },
+        {
+          "maxDataPoints": 11000,
+          "refId": "C",
+          "expr": "sum(waito_cache_stampede_total) by (cache_name)",
+          "legendFormat": "overlapping loads {{cache_name}}"
         }
       ]
     },
@@ -633,6 +693,7 @@
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(clamp_min(kafka_consumergroup_lag, 0)) by (consumergroup, topic)",
           "legendFormat": "{{consumergroup}} {{topic}}"
@@ -647,6 +708,7 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(rate(kafka_topic_partition_current_offset{topic!=\"__consumer_offsets\"}[1m])) by (topic)",
           "legendFormat": "{{topic}} produced/sec"
@@ -661,6 +723,7 @@
       "fieldConfig": {"defaults": {"unit": "ops", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "sum(rate(kafka_consumergroup_current_offset{topic!=\"__consumer_offsets\"}[1m])) by (consumergroup, topic)",
           "legendFormat": "{{consumergroup}} {{topic}} consumed/sec"
@@ -675,11 +738,13 @@
       "fieldConfig": {"defaults": {"decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "kafka_brokers",
           "legendFormat": "brokers"
         },
         {
+          "maxDataPoints": 11000,
           "refId": "B",
           "expr": "docker_container_cpu_usage_cores{name=~\"waito-kafka-[0-9]+\"} * 100",
           "legendFormat": "{{name}} cpu %"
@@ -702,6 +767,7 @@
       "fieldConfig": {"defaults": {"unit": "percent", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "docker_container_cpu_usage_cores{name=~\"waito-mysql|waito-redis|waito-kafka-[0-9]+|waito-api\"} * 100",
           "legendFormat": "{{name}}"
@@ -716,6 +782,7 @@
       "fieldConfig": {"defaults": {"unit": "mbytes", "decimals": 2}},
       "targets": [
         {
+          "maxDataPoints": 11000,
           "refId": "A",
           "expr": "docker_container_memory_usage_mb{name=~\"waito-mysql|waito-redis|waito-kafka-[0-9]+|waito-api\"}",
           "legendFormat": "{{name}}"

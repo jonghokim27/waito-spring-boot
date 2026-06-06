@@ -12,6 +12,8 @@ import org.springframework.expression.spel.standard.SpelExpressionParser
 import org.springframework.stereotype.Component
 import tools.jackson.databind.ObjectMapper
 import java.lang.reflect.Method
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 
 @Aspect
 @Component
@@ -22,6 +24,7 @@ class RedisCacheableAspect(
 ) {
     private val parser = SpelExpressionParser()
     private val parameterNameDiscoverer = DefaultParameterNameDiscoverer()
+    private val activeLoads = ConcurrentHashMap<String, AtomicInteger>()
 
     @Around("@annotation(redisCacheable)")
     fun around(joinPoint: ProceedingJoinPoint, redisCacheable: RedisCacheable): Any? {
@@ -35,11 +38,23 @@ class RedisCacheableAspect(
 
         cacheMetricPort.recordMiss(redisCacheable.cacheName)
 
-        val result = joinPoint.proceed()
-        if (result != null || !redisCacheable.unlessNull) {
-            cachePort.set(cacheKey, objectMapper.writeValueAsString(result), redisCacheable.ttlSeconds)
+        val activeLoadCount = activeLoads.computeIfAbsent(cacheKey) { AtomicInteger() }.incrementAndGet()
+        if (activeLoadCount > 1) {
+            cacheMetricPort.recordStampede(redisCacheable.cacheName)
         }
-        return result
+
+        try {
+            val result = joinPoint.proceed()
+            if (result != null || !redisCacheable.unlessNull) {
+                cachePort.set(cacheKey, objectMapper.writeValueAsString(result), redisCacheable.ttlSeconds)
+                cacheMetricPort.recordPut(redisCacheable.cacheName)
+            }
+            return result
+        } finally {
+            activeLoads.computeIfPresent(cacheKey) { _, activeLoadsForKey ->
+                activeLoadsForKey.takeIf { it.decrementAndGet() > 0 }
+            }
+        }
     }
 
     private fun evaluateKey(
