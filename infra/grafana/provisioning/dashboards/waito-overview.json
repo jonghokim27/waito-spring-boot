@@ -624,7 +624,7 @@
     },
     {
       "id": 43,
-      "title": "Cache Hit / Miss by Cache",
+      "title": "Cache Hit / Miss Increase (1m)",
       "type": "timeseries",
       "gridPos": {"x": 0, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
@@ -632,14 +632,14 @@
         {
           "maxDataPoints": 11000,
           "refId": "A",
-          "expr": "sum(waito_cache_hit_total) by (cache_name)",
-          "legendFormat": "total hits {{cache_name}}"
+          "expr": "round(sum(increase(waito_cache_hit_total[1m])) by (cache_name)) or sum(waito_cache_hit_total) by (cache_name)",
+          "legendFormat": "hits {{cache_name}}"
         },
         {
           "maxDataPoints": 11000,
           "refId": "B",
-          "expr": "sum(waito_cache_miss_total) by (cache_name)",
-          "legendFormat": "total misses {{cache_name}}"
+          "expr": "round(sum(increase(waito_cache_miss_total[1m])) by (cache_name)) or sum(waito_cache_miss_total) by (cache_name)",
+          "legendFormat": "misses {{cache_name}}"
         }
       ]
     },
@@ -653,14 +653,14 @@
         {
           "maxDataPoints": 11000,
           "refId": "A",
-          "expr": "sum(increase(waito_cache_hit_total[1m])) by (cache_name) / (sum(increase(waito_cache_hit_total[1m])) by (cache_name) + sum(increase(waito_cache_miss_total[1m])) by (cache_name))",
+          "expr": "(sum(increase(waito_cache_hit_total[1m])) by (cache_name) or sum(waito_cache_hit_total) by (cache_name)) / ((sum(increase(waito_cache_hit_total[1m])) by (cache_name) or sum(waito_cache_hit_total) by (cache_name)) + (sum(increase(waito_cache_miss_total[1m])) by (cache_name) or sum(waito_cache_miss_total) by (cache_name)))",
           "legendFormat": "{{cache_name}}"
         }
       ]
     },
     {
       "id": 45,
-      "title": "Cache Stampede Events / Miss / Put",
+      "title": "Cache Stampede / Miss / Put Increase (1m)",
       "type": "timeseries",
       "gridPos": {"x": 16, "y": 81, "w": 8, "h": 8},
       "fieldConfig": {"defaults": {"unit": "short", "decimals": 0}},
@@ -668,19 +668,19 @@
         {
           "maxDataPoints": 11000,
           "refId": "A",
-          "expr": "sum(waito_cache_miss_total) by (cache_name)",
-          "legendFormat": "total misses {{cache_name}}"
+          "expr": "round(sum(increase(waito_cache_miss_total[1m])) by (cache_name)) or sum(waito_cache_miss_total) by (cache_name)",
+          "legendFormat": "misses {{cache_name}}"
         },
         {
           "maxDataPoints": 11000,
           "refId": "B",
-          "expr": "sum(waito_cache_put_total) by (cache_name)",
-          "legendFormat": "total puts {{cache_name}}"
+          "expr": "round(sum(increase(waito_cache_put_total[1m])) by (cache_name)) or sum(waito_cache_put_total) by (cache_name)",
+          "legendFormat": "puts {{cache_name}}"
         },
         {
           "maxDataPoints": 11000,
           "refId": "C",
-          "expr": "sum(waito_cache_stampede_total) by (cache_name)",
+          "expr": "round(sum(increase(waito_cache_stampede_total[1m])) by (cache_name)) or sum(waito_cache_stampede_total) by (cache_name)",
           "legendFormat": "overlapping loads {{cache_name}}"
         }
       ]
